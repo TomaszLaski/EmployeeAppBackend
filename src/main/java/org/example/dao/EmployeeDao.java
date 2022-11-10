@@ -14,9 +14,6 @@ public class EmployeeDao {
 
         Statement st = c.createStatement();
         ResultSet rs = st.executeQuery(
-//                String.format("SELECT * FROM Employee" +
-//                        "LEFT JOIN %s " +
-//                        "ON Employee.employeeNumber = Sales_Employees.employee_id_fk ", department));
                 String.format("SELECT * from Employee e join %s d" +
                         " on e.employeeNumber = d.employee_id_fk ", department));
 

@@ -37,16 +37,7 @@ public class WebService {
             return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).build();
         }
     }
-
-
-
-//    @GET
-//    @Path("/employees/{employee}")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public String getMsg(@PathParam("employee") String employee) {
-//        return "Hello from a RESTful Web service: " + employee;
-//    }
-
+    
     @GET
     @Path("/employee")
     @Produces(MediaType.APPLICATION_JSON)
