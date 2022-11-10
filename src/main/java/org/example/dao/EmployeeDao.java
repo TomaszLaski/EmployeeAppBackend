@@ -9,6 +9,33 @@ import java.util.List;
 
 
 public class EmployeeDao {
+
+    public List<Employee> getEmployeesByDepartment(String department, Connection c) throws SQLException {
+
+        Statement st = c.createStatement();
+        ResultSet rs = st.executeQuery(
+//                String.format("SELECT * FROM Employee" +
+//                        "LEFT JOIN %s " +
+//                        "ON Employee.employeeNumber = Sales_Employees.employee_id_fk ", department));
+                String.format("SELECT * from Employee e join %s d" +
+                        " on e.employeeNumber = d.employee_id_fk ", department));
+
+        List<Employee> employees = new ArrayList<>();
+
+        while (rs.next()) {
+            Employee employee = new Employee(
+                    rs.getString("name"),
+                    rs.getString("address"),
+                    rs.getString("nationalInsuranceNo"),
+                    rs.getString("bankAccountIBANorBic"),
+                    rs.getInt("startingSalary"),
+                    rs.getInt("employeeNumber")
+            );
+            employees.add(employee);
+        }
+        return employees;
+    }
+
     public int insertEmployee(Employee emp1, Connection c) throws SQLException {
         String insertEmployeeQuery = "INSERT INTO Employee (name, address, nationalInsuranceNo, bankAccountIBANorBic, startingSalary, employeeNumber )"
                 + " VALUES (?, ?, ?, ?, ?, ?)";

@@ -25,12 +25,27 @@ public class WebService {
         DatabaseConnector databaseConnector = new DatabaseConnector();
         employeeService = new EmployeeService(new EmployeeDao(), databaseConnector);
     }
+
     @GET
-    @Path("/employees/{employee}")
+    @Path("/employees/{department}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getMsg(@PathParam("employee") String employee) {
-        return "Hello from a RESTful Web service: " + employee;
+    public Response getEmployeesByDepartment(@PathParam("department") String department) {
+        try {
+            return Response.ok(employeeService.getEmployeesByDepartment(department)).build();
+        } catch (SQLException | DatabaseConnectionException e) {
+            System.out.println(e);
+            return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).build();
+        }
     }
+
+
+
+//    @GET
+//    @Path("/employees/{employee}")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public String getMsg(@PathParam("employee") String employee) {
+//        return "Hello from a RESTful Web service: " + employee;
+//    }
 
     @GET
     @Path("/employee")

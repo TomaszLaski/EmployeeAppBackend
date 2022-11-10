@@ -24,5 +24,9 @@ public class EmployeeService {
     public List<Employee> getEmployees() throws DatabaseConnectionException, SQLException {
         return employeeDao.getEmployees(databaseConnector.getConnection());
     }
+
+    public List<Employee> getEmployeesByDepartment(String department) throws DatabaseConnectionException, SQLException {
+        return employeeDao.getEmployeesByDepartment(department, databaseConnector.getConnection());
+    }
 }
 
