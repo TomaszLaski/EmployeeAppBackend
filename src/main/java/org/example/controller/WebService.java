@@ -95,7 +95,17 @@ public class WebService {
         }
     }
 
-
+    @GET
+    @Path("/salaryreport")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getSalaryReport(){
+        try {
+            return Response.status(HttpStatus.OK_200).entity(salesEmployeeService.getSallaryReport()).build();
+        } catch (SQLException | DatabaseConnectionException e) {
+            System.out.println(e);
+            return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).build();
+        }
+    }
 }
 
 
