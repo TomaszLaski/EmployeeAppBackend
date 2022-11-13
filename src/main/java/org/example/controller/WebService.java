@@ -2,13 +2,11 @@ package org.example.controller;
 
 
 import org.eclipse.jetty.http.HttpStatus;
-import org.example.WebServiceApplication;
 import io.swagger.annotations.Api;
 import org.example.dao.EmployeeDao;
 import org.example.dao.SalesEmployeeDao;
 import org.example.exception.DatabaseConnectionException;
 import org.example.model.Employee;
-import org.example.dao.EmployeesDB;
 import org.example.model.SalesEmployee;
 import org.example.service.EmployeeService;
 import org.example.service.SalesEmployeeService;
@@ -84,6 +82,20 @@ public class WebService {
             return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).build();
         }
     }
+
+    @GET
+    @Path("/salesEmployee/topsales")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getTopSalesEmployee(){
+        try {
+            return Response.status(HttpStatus.OK_200).entity(salesEmployeeService.getHighestSaleValueSalesEmployee()).build();
+        } catch (SQLException | DatabaseConnectionException e) {
+            System.out.println(e);
+            return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).build();
+        }
+    }
+
+
 }
 
 

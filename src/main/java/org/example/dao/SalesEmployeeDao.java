@@ -1,5 +1,6 @@
 package org.example.dao;
 
+import org.example.model.Employee;
 import org.example.model.SalesEmployee;
 
 import java.sql.Connection;
@@ -20,22 +21,25 @@ public class SalesEmployeeDao {
         preparedStmt.executeUpdate();
     }
 
-    public SalesEmployee getSalesEmployee(int employee_id_fk, Connection c) throws SQLException {
+    public Employee getHighestSaleValueSalesEmployee(Connection c) throws SQLException {
         Statement st = c.createStatement();
 
         ResultSet rs = st.executeQuery(
-                "SELECT * "
-                        + "FROM salesEmployee "
-                        + "WHERE employee_id_fk = " + employee_id_fk + ";");
+                "SELECT *, MAX(total_sales_value) FROM Employee join Sales_Employees on Employee.employeeNumber = Sales_Employees.employee_id_fk ;");
 
 
+        Employee employee = null;
         while (rs.next()) {
-            return new SalesEmployee(
-                    rs.getInt("commission_rate"),
-                    rs.getFloat("total_sales_value"),
-                    rs.getFloat("employee_id_fk"));
+            employee = new Employee(
+                    rs.getString("name"),
+                    rs.getString("address"),
+                    rs.getString("nationalInsuranceNo"),
+                    rs.getString("bankAccountIBANorBic"),
+                    rs.getInt("startingSalary"),
+                    rs.getInt("employeeNumber")
+            );
         }
 
-        return null;
+        return employee;
     }
 }

@@ -2,6 +2,7 @@ package org.example.service;
 
 import org.example.dao.SalesEmployeeDao;
 import org.example.exception.DatabaseConnectionException;
+import org.example.model.Employee;
 import org.example.model.SalesEmployee;
 import org.example.util.DatabaseConnector;
 
@@ -20,7 +21,7 @@ public class SalesEmployeeService {
         salesEmployeeDao.insertSalesEmployee(sEmp1, databaseConnector.getConnection());
     }
 
-    public SalesEmployee getSalesEmployee(int employeeId) throws DatabaseConnectionException, SQLException {
-        return salesEmployeeDao.getSalesEmployee(employeeId, databaseConnector.getConnection());
+    public Employee getHighestSaleValueSalesEmployee() throws DatabaseConnectionException, SQLException {
+        return salesEmployeeDao.getHighestSaleValueSalesEmployee( databaseConnector.getConnection());
     }
 }
