@@ -5,10 +5,13 @@ import org.eclipse.jetty.http.HttpStatus;
 import org.example.WebServiceApplication;
 import io.swagger.annotations.Api;
 import org.example.dao.EmployeeDao;
+import org.example.dao.SalesEmployeeDao;
 import org.example.exception.DatabaseConnectionException;
 import org.example.model.Employee;
 import org.example.dao.EmployeesDB;
+import org.example.model.SalesEmployee;
 import org.example.service.EmployeeService;
+import org.example.service.SalesEmployeeService;
 import org.example.util.DatabaseConnector;
 
 
@@ -21,9 +24,13 @@ import java.sql.SQLException;
 @Path("/api")
 public class WebService {
     private static EmployeeService employeeService;
+    private static SalesEmployeeService salesEmployeeService;
+
     public WebService() {
         DatabaseConnector databaseConnector = new DatabaseConnector();
         employeeService = new EmployeeService(new EmployeeDao(), databaseConnector);
+        salesEmployeeService = new SalesEmployeeService(new SalesEmployeeDao(), databaseConnector);
+
     }
 
     @GET
@@ -64,4 +71,20 @@ public class WebService {
 
     }
 
+    @POST
+    @Path("/salesemployee")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createSalesEmployee(SalesEmployee salesEmployee) {
+        try {
+            salesEmployeeService.insertSalesEmployee(salesEmployee);
+            return Response.status(HttpStatus.CREATED_201).build();
+        } catch (SQLException | DatabaseConnectionException e) {
+            System.out.println(e);
+            return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).build();
+        }
+    }
 }
+
+
+
