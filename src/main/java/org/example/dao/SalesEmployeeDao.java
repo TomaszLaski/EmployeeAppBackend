@@ -51,7 +51,7 @@ public class SalesEmployeeDao {
 
         Statement st = c.createStatement();
         ResultSet rs = st.executeQuery(
-                String.format("SELECT name, startingSalary*0.25  as gross_payment from Employee LEFT JOIN Sales_Employees on Employee.employeeNumber = Sales_Employees.employee_id_fk WHERE Sales_Employees.employee_id_fk IS NULL union all SELECT name, startingSalary*0.25 + (total_sales_value * commission_rate) as gross_payment from Employee join Sales_Employees on Employee.employeeNumber = Sales_Employees.employee_id_fk; "));
+                String.format("SELECT name, startingSalary*0.25  as gross_payment from Employee LEFT JOIN Sales_Employees on Employee.employeeNumber = Sales_Employees.employee_id_fk WHERE Sales_Employees.employee_id_fk IS NULL union all SELECT name, startingSalary*0.25 + (total_sales_value * commission_rate) as gross_payment from Employee join Sales_Employees on Employee.employeeNumber = Sales_Employees.employee_id_fk;"));
 
 
         List<ReportResponse> reports = new ArrayList<>();
